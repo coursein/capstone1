@@ -1,16 +1,28 @@
-# This is a sample Python script.
+import mysql.connector as connector
+# To create a connection pool, import MySQLConnectionPool class from MySQL Connector/Python.
+from mysql.connector.pooling import MySQLConnectionPool
+# To find the information on the error, import the Error class from MySQL Connector/Python.
+from mysql.connector import Error
+from mysql.connector import errorcode
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+dbconfig = {"user": "mario", "password": "cuisine", "port": 3306, "host": "localhost"}
+#db connect
+try:
+    connection = connector.connect(**dbconfig)
+except connector.Error as err:
+    if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+        print("connection user or password are incorrect")
+    elif err.errno == errorcode.ER_BAD_DB_ERROR:
+        print("database does not exist")
+    else:
+        print(err)
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+create_database_query = """CREATE DATABASE little_lemon"""
+use_database_query = """USE little_lemon"""
+cursor = connection.cursor()
+try:
+    cursor.execute(use_database_query)
+except connector.Error as err:
+    if err.errno == errorcode.ER_BAD_DB_ERROR:
+        cursor.execute(create_database_query)
+        cursor.execute(use_database_query)
