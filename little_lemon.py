@@ -42,11 +42,26 @@ END
  """
 
 get_manager_query ="""
- CREATE PROCEDURE ManageBooking()
+CREATE PROCEDURE ManageBooking()
 BEGIN
 SELECT "There is no description of what manage does?? lol.";
 END
  """
 
+get_manager_query ="""
+CREATE PROCEDURE ManageBooking()
+BEGIN
+SELECT "There is no description of what manage does?? lol.";
+END
+ """
+
+get_update_query ="""
+CREATE PROCEDURE UpdateBooking()
+BEGIN 
+UPDATE bookings SET guestfirstname = 'Update', guestlastname = 'here' WHERE bookingid = 1;
+END
+ """
+
 cursor.execute(get_max_query)
 cursor.execute(get_manager_query)
+cursor.execute(get_update_query)
