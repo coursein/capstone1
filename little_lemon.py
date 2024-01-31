@@ -41,12 +41,6 @@ SELECT max(Quantity) FROM little_lemon.orders;
 END
  """
 
-get_manager_query ="""
-CREATE PROCEDURE ManageBooking()
-BEGIN
-SELECT "There is no description of what manage does?? lol.";
-END
- """
 
 get_manager_query ="""
 CREATE PROCEDURE ManageBooking()
@@ -62,6 +56,20 @@ UPDATE bookings SET guestfirstname = 'Update', guestlastname = 'here' WHERE book
 END
  """
 
+get_cancel_query ="""
+CREATE PROCEDURE CancelBooking()
+BEGIN 
+DELETE FROM bookings where bookingid = 1;
+END
+ """
+#execute create scripts
 cursor.execute(get_max_query)
 cursor.execute(get_manager_query)
 cursor.execute(get_update_query)
+cursor.execute(get_cancel_query)
+
+#cursor.callproc('getmaxquantity')
+#cursor.callproc('managebooking')
+#cursor.callproc('updatebooking')
+#cursor.callproc('cancelbooking')
+#connection.commit()
