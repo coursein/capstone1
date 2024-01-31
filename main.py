@@ -26,3 +26,27 @@ except connector.Error as err:
     if err.errno == errorcode.ER_BAD_DB_ERROR:
         cursor.execute(create_database_query)
         cursor.execute(use_database_query)
+try:
+    cursor.execute("select * from Bookings")
+
+except connector.Error as err:
+    if err.errno == 1146:
+        exec(open('table_builder.py').read())
+
+#procedure push
+get_max_query ="""
+ CREATE PROCEDURE GetMaxQuantity()
+BEGIN
+SELECT max(Quantity) FROM little_lemon.orders;
+END
+ """
+
+get_manager_query ="""
+ CREATE PROCEDURE ManageBooking()
+BEGIN
+SELECT "There is no description of what manage does?? lol.";
+END
+ """
+
+cursor.execute(get_max_query)
+cursor.execute(get_manager_query)
